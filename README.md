@@ -27,7 +27,7 @@ Aqui estão algumas orientações sobre como abordar o desafio:
 
 -   Você tem liberdade para tratar os dados da forma que julgar necessária para produzir um resultado de qualidade.
 -   Defina a melhor arquitetura e organização de código que julgar necessária.
--   Forneça instruções detalhadas sobre como executar seu código localmente. Códigos que não puderem ser executados serão desclassificados.
+-   Forneça instruções detalhadas sobre como executar seu código localmente. Códigos que não puderem ser executados serão desclassificados (o desejável seria usar docker-compose para provisionar o ambiente, mas não é obrigatório).
 -   Mostre o melhor do seu trabalho. Apesar de pequeno, este desafio é suficiente para avaliar sua organização de código, domínio da linguagem e do framework, capacidade de solução de problemas, conhecimento de arquitetura de software, boas práticas e documentação de código.
 -   A entrega deverá ser feita por meio de um link do seu repositório no github. 
 
