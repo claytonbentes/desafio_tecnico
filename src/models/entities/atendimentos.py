@@ -1,16 +1,17 @@
-from src.models.settings.base import Base
-from sqlalchemy import Column, String, Integer
+import pandas as pd
 
-class Atendimentos(Base):
-    __tablename__ = "atendimentos"
-    ID = Column(Integer,primary_key=True)
-    Nome = Column(String)
-    Nascimento = Column(String)
-    CNS = Column(Integer)
-    CPF = Column(String)
-    UNIDADE = Column(String)
-    data_atendimento = Column(String)
-    condicao_saude = Column(String)
+dataframe = pd.read_csv('atendimentos.csv', index_col=0)
+
+class Atendimentos:
+    def __init__(self, id, nome, nascimento, cns, cpf, unidade, data_atendimento, condicao_saude):
+        self.ID = id
+        self.Nome = nome
+        self.Nascimento = nascimento
+        self.CNS = cns
+        self.CPF = cpf
+        self.UNIDADE = unidade
+        self.data_atendimento = data_atendimento
+        self.condicao_saude = condicao_saude
 
 
     def __repr__(self):

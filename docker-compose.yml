@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  atendimentos:
+    container_name: atendimentos
+    image: claytonbentes/atendimentos:v1
+    ports:
+      - "8001:8001"

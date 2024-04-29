@@ -1,14 +1,34 @@
-from flask import Blueprint, jsonify, request
-from src.http_types.http_request import HttpRequest
-from src.http_types.http_response import HttpResponse
+from flask import Flask, request, jsonify
+from flask_restx import  Resource, fields
+from flask_restx import Api
 from src.data.atendimento_handler import AtendimentoHandler
+from flask_restx import Namespace, Resource, fields
 
-atendimentos_route_bp = Blueprint("atendimentos_route", __name__)
+app = Flask(__name__)
+api = Api(app, version='1.0', title='Atendimento API',
+    description='Api para pegar dados através de um CSV',
+)
+api = Namespace('Atendimento')
 
-@atendimentos_route_bp.route("/api/v1/atendimentos/<atend_data>", methods=["GET"])
-def get_atendimento(atend_data):
-    atend_handler = AtendimentoHandler()
+atendimento = api.model('Atendimento', {
+    'data_atendimento': fields.String(required=True, description='Data de atendimento'),
+    'unidade': fields.String(required=True, description='Unidade de atendimento'),
+    'condicao_saude': fields.String(required=True, description='condição de saude de paciente'),
+})
 
-    # Você já tem a data de atendimento como parte da URL, então não precisa acessar request.json
-    http_response = atend_handler.find_by_data_consulta(atend_data)
-    return jsonify(http_response.body), http_response.status_code
+@api.route('/')
+class AtendimentoResource(Resource):
+    @api.doc('get_atendimento')
+    @api.param('data_atendimento', 'Data de atendimento', required=False)
+    @api.param('unidade', 'Unidade de atendimento', required=False)
+    @api.param('condicao_saude', 'condição de saude de paciente', required=False)
+    def get(self):
+        '''Listar os atendimentos de acordo com os filtros passados'''
+        data = request.args.get('data_atendimento') or False
+        unidade = request.args.get('unidade') or False
+        condicao = request.args.get('condicao_saude') or False
+
+        atend_handler = AtendimentoHandler()
+        http_response = atend_handler.filtro_atendimento(data, unidade, condicao)
+
+        return (http_response.body), http_response.status_code

@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
-from src.models.settings.connection import db_connection_handler
-db_connection_handler.connect_to_db()
+from flask_restx import Api
 
 app = Flask(__name__)
 CORS(app)
 
-from src.main.routes.atendimentos_routes import atendimentos_route_bp
-app.register_blueprint(atendimentos_route_bp)
+api = Api(app, version='1.0', title='CSV API',doc='/swagger/')
+
+
+from src.main.routes.atendimentos_routes import api as atendimentos_ns
+api.add_namespace(atendimentos_ns, path='/api/v1/atendimentos')
